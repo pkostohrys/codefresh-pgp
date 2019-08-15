@@ -1,7 +1,7 @@
 kind: step-type
 version: '1.0'
 metadata:
-  name: codefresh/pgp
+  name: codefresh-inc/pgp
   isPublic: true
   description: Ability to sign file with pgp
   sources:
@@ -12,13 +12,13 @@ metadata:
     - name: Pasha Kostohrys
       email: pavel@codefresh.io
   categories:
-    - deployment
+    - security
   official: false
   tags: []
   icon:
     type: svg
-    url: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgTJ0h1b4qu1c2n_1gesvCSqGpWNXe7OyHOYQiC5kH0oapRZx8
-    background: "#333D47"
+    url: https://image.flaticon.com/icons/svg/65/65220.svg
+    background: "#ffffff"
   examples:
     - description: example-1
       workflow:
