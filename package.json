@@ -1,0 +1,14 @@
+{
+  "name": "gpg-plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "openpgp": "4.6.0",
+    "bluebird": "^3.5.5",
+    "glob": "^7.1.4"
+  },
+  "scripts": {
+    "start": "node ./index.js"
+  }
+}
