@@ -1,4 +1,5 @@
-const { Encrypt, Decrypt } = require('./Crypto.Functions');
+const Encrypt = require('./decrypt');
+const Decrypt = require('./encrypt');
 const config = require('./config');
 
 const main = async () => {
