@@ -3,6 +3,8 @@ const encrypt = require('./encrypt');
 const { action } = require('./config');
 
 const main = async () => {
+    console.info('\n');
+
     let pgpAction;
     if (action === 'decrypt') {
         pgpAction = decrypt;
@@ -13,6 +15,8 @@ const main = async () => {
     };
 
     await pgpAction.validate().exec();
+
+    console.info('\n');
 };
 
 main().catch(err => {

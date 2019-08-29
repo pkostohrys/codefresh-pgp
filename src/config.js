@@ -2,7 +2,7 @@ const yn = require('yn');
 
 const {
     ACTION,
-    PRIVAT_KEY,
+    PRIVATE_KEY,
     PUBLIC_KEY,
     PASS_PHRASE,
     GLOB
@@ -12,7 +12,7 @@ module.exports = {
     action: ACTION,
     data: {
         pubKey: PUBLIC_KEY,
-        privKey: PRIVAT_KEY,
+        privKey: PRIVATE_KEY,
         globExpression: GLOB,
         passPhrase: PASS_PHRASE,
     }
