@@ -1,10 +1,10 @@
-const Encrypt = require('./decrypt');
-const Decrypt = require('./encrypt');
-const config = require('./config');
+const decrypt = require('./decrypt');
+const encrypt = require('./encrypt');
+const { shouldDecrypt } = require('./config');
 
 const main = async () => {
-    const Action = config.decrypt ? Decrypt : Encrypt;
-    await (new Action(config.data)).validate().run();
+    const pgpAction = shouldDecrypt ? decrypt : encrypt;
+    await pgpAction.validate().exec();
 };
 
 main().catch(err => {

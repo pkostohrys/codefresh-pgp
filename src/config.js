@@ -9,7 +9,7 @@ const {
 } = process.env;
 
 module.exports = {
-    decrypt: yn(DECRYPT),
+    shouldDecrypt: yn(DECRYPT),
     data: {
         pubKey: PUBLIC_KEY,
         privKey: PRIVAT_KEY,

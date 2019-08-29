@@ -2,10 +2,11 @@ const glob = require('glob');
 const fs = require('fs');
 const Promise = require('bluebird');
 
-class Runner {
-    constructor(config) {
-        this.config = config;
+const { data } = require('./config');
 
+class PGPAction {
+    constructor() {
+        this.config = data;
         if (!this.config.globExpression) {
             console.error('Files glob expression should be provided');
             process.exit(1);
@@ -24,15 +25,13 @@ class Runner {
         return new Buffer(str, 'base64').toString('utf8');
     }
 
-    async run() {
+    async exec() {
         const filesContent = await this._getFilesContent();
-
         const promises = filesContent.map(fileContent => {
-            return this.exec(fileContent.content, fileContent.file)
+            return this.process(fileContent.content, fileContent.file)
         });
-
-        await Promise.all(promises.map(p => p.catch(() => undefined)));
+        await Promise.all(promises.map(p => p.catch(err => console.log(err))));
     };
 }
 
-module.exports = Runner;
+module.exports = PGPAction;
