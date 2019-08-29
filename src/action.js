@@ -16,6 +16,14 @@ class PGPAction {
 
     async _getFilesContent() {
         const files = await Promise.fromCallback(cb => glob(this.config.globExpression, {}, cb));
+
+        
+        if (Array.isArray(files) && files.length > 0) {
+            console.info('Matched files: ', files.join(', '));
+        } else {
+            console.info(`No files match to \'${this.config.globExpression}\'`);
+        }
+
         return await Promise.all(files.map(async file => {
             const fileContent = await Promise.fromCallback(cb => fs.readFile(file, cb));
             return { file, content: new Uint8Array(fileContent) };
