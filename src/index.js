@@ -1,9 +1,17 @@
 const decrypt = require('./decrypt');
 const encrypt = require('./encrypt');
-const { shouldDecrypt } = require('./config');
+const { action } = require('./config');
 
 const main = async () => {
-    const pgpAction = shouldDecrypt ? decrypt : encrypt;
+    let pgpAction;
+    if (action === 'decrypt') {
+        pgpAction = decrypt;
+    } else if (action === 'encrypt') {
+        pgpAction = encrypt;
+    } else {
+        throw new Error('Action parameter is missing. Should be equal to \'encrypt\' or \'decrypt\'');
+    };
+
     await pgpAction.validate().exec();
 };
 

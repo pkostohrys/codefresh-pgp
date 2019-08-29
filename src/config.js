@@ -1,7 +1,7 @@
 const yn = require('yn');
 
 const {
-    DECRYPT,
+    ACTION,
     PRIVAT_KEY,
     PUBLIC_KEY,
     PASS_PHRASE,
@@ -9,7 +9,7 @@ const {
 } = process.env;
 
 module.exports = {
-    shouldDecrypt: yn(DECRYPT),
+    action: ACTION,
     data: {
         pubKey: PUBLIC_KEY,
         privKey: PRIVAT_KEY,

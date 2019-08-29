@@ -2,14 +2,18 @@ const openpgp = require('openpgp');
 const fs = require('fs');
 const Promise = require('bluebird');
 
-const PGPAction = require('./pgpAction');
+const PGPAction = require('./action');
 
 class Decrypt extends PGPAction {
     async process(content, file) {
         const { privKey, passPhrase } = this.config;
         const formattedContent = new TextDecoder().decode(content);
-        const privKeyObj = (await openpgp.key.readArmored(this._base64ToUtf8(privKey))).keys[0]
-        privKeyObj.decrypt(passPhrase);
+
+        const keys = await this.readKey(privKey);
+        
+        const privKeyObj = keys[0];
+        privKeyObj.decrypt(passPhrase)
+
         const options = {
             message: await openpgp.message.readArmored(formattedContent),
             privateKeys: [privKeyObj],
@@ -19,7 +23,7 @@ class Decrypt extends PGPAction {
             return Promise.fromCallback(cb => fs.writeFile(file, decodedText.data, cb));
         });
     }
-    
+
     validate() {
         const { privKey, passPhrase } = this.config;
         if (!privKey) {

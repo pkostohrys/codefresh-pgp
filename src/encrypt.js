@@ -2,13 +2,16 @@ const openpgp = require('openpgp');
 const fs = require('fs');
 const Promise = require('bluebird');
 
-const PGPAction = require('./pgpAction');
+const PGPAction = require('./action');
 
 class Encrypt extends PGPAction {
     async process(content, file) {
         const { pubKey } = this.config;
+
+        const keys = await this.readKey(pubKey);
+
         const options = {
-            publicKeys: (await openpgp.key.readArmored(this._base64ToUtf8(pubKey))).keys,
+            publicKeys: keys,
             message: openpgp.message.fromBinary(content),
             format: 'binary'
         };

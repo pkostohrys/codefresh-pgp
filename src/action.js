@@ -1,6 +1,7 @@
 const glob = require('glob');
 const fs = require('fs');
 const Promise = require('bluebird');
+const openpgp = require('openpgp');
 
 const { data } = require('./config');
 
@@ -22,7 +23,20 @@ class PGPAction {
     }
 
     _base64ToUtf8(str) {
-        return new Buffer(str, 'base64').toString('utf8');
+        return Buffer.from(str, 'base64').toString('utf8');
+    }
+
+    async readKey(base64Key) {
+        const { keys, err } = await openpgp.key.readArmored(this._base64ToUtf8(base64Key));
+
+        //  checking for errors while reading key
+        if (Array.isArray(err) && err.length > 0) {
+            let errMessages = '';
+            err.forEach((e, i) => errMessages += `\n${i + 1}. ${e.message}`);
+            throw new Error(`PGP keys reading failed ${errMessages}`);
+        }
+
+        return keys;
     }
 
     async exec() {
@@ -30,7 +44,7 @@ class PGPAction {
         const promises = filesContent.map(fileContent => {
             return this.process(fileContent.content, fileContent.file)
         });
-        await Promise.all(promises.map(p => p.catch(err => console.log(err))));
+        await Promise.all(promises.map(p => p.catch(err => console.error(err))));
     };
 }
 
