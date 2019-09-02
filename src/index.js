@@ -5,8 +5,6 @@ const { action } = require('./config');
 const main = async () => {
     console.info('\n');
 
-    console.log(JSON.stringify(process.env));
-
     let pgpAction;
     if (action === 'decrypt') {
         pgpAction = decrypt;
